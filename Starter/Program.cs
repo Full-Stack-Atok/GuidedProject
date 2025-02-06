@@ -55,3 +55,4 @@ Console.WriteLine("Logan:\t\t" + loganScore + "\tA-");
 
 Console.WriteLine("Press the Enter key to continue");
 Console.ReadLine();
+
