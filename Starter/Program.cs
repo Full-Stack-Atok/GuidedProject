@@ -29,7 +29,7 @@ int[] studentScores = new int[10];
 string currentStudentLetterGrade = "";
 
 // Write the Report Header to the console
-Console.WriteLine("Student\t\tGrade\n");
+Console.WriteLine("Student\t\tExam Score\tOverall Grade\tExtra Credit\n");
 
 foreach (string name in studentNames) {
     
@@ -62,6 +62,7 @@ foreach (string name in studentNames) {
 
     else if (currentStudent == "Gregor")
         studentScores = gregorScores;
+
     // initialize/reset the sum of scored assignments
     int sumAssignmentScores = 0;
 
@@ -70,6 +71,14 @@ foreach (string name in studentNames) {
 
     // initialize/reset a counter for the number of assignments
     int gradedAssignments = 0;
+
+    // Calculate the extra credit points
+    int extraCreditTotal = 0;
+
+    for (int i = examAssignments; i < studentScores.Length; i++) {
+        extraCreditTotal += studentScores[i];
+        
+    }
 
     foreach(int score in studentScores) {
 
@@ -80,14 +89,22 @@ foreach (string name in studentNames) {
         // add the exam score to the sum
         sumAssignmentScores += score;
 
-        else
-            // add the extra credit points to the sum - bonus points equal to 10% of an exam score
-            sumAssignmentScores += score / 10;
-
     } 
 
-    currentStudentGrade = (decimal)sumAssignmentScores / examAssignments;
+    // Calculate the extra credit as 10% of the total extra credit scores
+    decimal extraCredit = extraCreditTotal * (0.10m / examAssignments);
 
+    // Calculate the average score
+    decimal examScore = (decimal)sumAssignmentScores / examAssignments;
+
+     
+     //Calculate the average credit score
+    int averageCreditScore = extraCreditTotal / (studentScores.Length - examAssignments);
+
+    // Calculate the overall grade including extra credit
+    currentStudentGrade = examScore + extraCredit;
+
+    // Determine Letter Grade
     if(currentStudentGrade >= 97) 
         currentStudentLetterGrade = "A+";
 
@@ -128,7 +145,7 @@ foreach (string name in studentNames) {
         currentStudentLetterGrade = "F";
     }
 
-    Console.WriteLine($"{currentStudent}\t\t{currentStudentGrade}\t{currentStudentLetterGrade}");
+    Console.WriteLine($"{currentStudent}\t\t{examScore:F2}\t\t{currentStudentGrade:F2}\t{currentStudentLetterGrade}\t{averageCreditScore} ({extraCredit:F2} pts)");
 }
 
 Console.WriteLine("Press the Enter key to continue");
